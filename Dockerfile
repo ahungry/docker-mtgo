@@ -41,7 +41,7 @@ RUN apt update && apt install -y --no-install-recommends \
         rm /usr/lib/i386-linux-gnu/gstreamer-1.0/libgst$x.so; done
 COPY extra/pulse-client.conf /etc/pulse/client.conf
 
-ENV WINEDEBUG -all
+ENV WINEDEBUG -all,err+all
 
 COPY extra/mtgo.sh /usr/local/bin/mtgo
 
