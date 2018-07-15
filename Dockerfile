@@ -38,8 +38,7 @@ RUN apt update && apt install -y --no-install-recommends \
     && apt autoremove -y --purge \
     && apt clean -y && rm -rf /var/lib/apt/lists/* \
     && for x in alpha avi cutter gio; do \
-        rm /usr/lib/i386-linux-gnu/gstreamer-1.0/libgst$x.so; done \
-    && su - $WINE_USER -c "winetricks sound=disabled"
+        rm /usr/lib/i386-linux-gnu/gstreamer-1.0/libgst$x.so; done
 COPY extra/pulse-client.conf /etc/pulse/client.conf
 
 ENV WINEDEBUG -all
@@ -51,6 +50,7 @@ ADD --chown=wine:wine http://mtgoclientdepot.onlinegaming.wizards.com/setup.exe 
 USER wine
 
 RUN gst-inspect-1.0
+RUN winetricks sound=disabled
 
 # hack to allow mounting of user.reg and system.reg from host
 # see https://github.com/pauleve/docker-mtgo/issues/6
