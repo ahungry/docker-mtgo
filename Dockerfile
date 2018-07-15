@@ -51,6 +51,7 @@ ADD --chown=wine:wine http://mtgoclientdepot.onlinegaming.wizards.com/setup.exe 
 USER wine
 
 RUN gst-inspect-1.0
+RUN winetricks sound=disabled
 
 # hack to allow mounting of user.reg and system.reg from host
 # see https://github.com/pauleve/docker-mtgo/issues/6

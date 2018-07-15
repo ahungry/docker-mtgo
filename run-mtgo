@@ -217,7 +217,7 @@ fi
 
 if $do_sound; then
     if [[ ${OSTYPE} == darwin* ]]; then
-        et +e
+        set +e
         pulseaudio --version>/dev/null
         if [ $? -ne 0 ]; then
             echo "PulseAudio does not seem to be installed."
