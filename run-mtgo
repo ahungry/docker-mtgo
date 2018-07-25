@@ -129,6 +129,17 @@ run() {
     fi
 }
 
+_host_uid=$(id -u)
+if [[ ${_host_uid} == 0 ]]; then
+    echo "Warning: you should not run this script as root."
+    echo "Instead, consider adding your user to the 'docker' group:"
+    echo "    sudo usermod -aG docker $$USER"
+    echo "then restarting your session."
+    echo "Press Enter to continue anyway, or CTRL+C to abort"
+    read
+    _host_uid=1000
+fi
+
 if $detect_tz; then
     if [ -f /etc/timezone ]; then
         mytz=$(</etc/timezone)
@@ -206,7 +217,7 @@ fi
 
 if $do_sound; then
     if [[ ${OSTYPE} == darwin* ]]; then
-        set +e
+        et +e
         pulseaudio --version>/dev/null
         if [ $? -ne 0 ]; then
             echo "PulseAudio does not seem to be installed."
@@ -237,7 +248,7 @@ if $do_sound; then
         opts="${opts} -v $HOME/.config/pulse:/home/wine/.config/pulse"
         opts="${opts} -e PULSE_SERVER=$ip"
     else
-        _host_pulse="/run/user/$(id -u)/pulse/native"
+        _host_pulse="/run/user/${_host_uid}/pulse/native"
         if [ ! -S $_host_pulse ]; then
             echo "PulseAudio does not seem active (${_host_pulse} not found)"
             echo "Run 'pulseaudio --start' and try again"
