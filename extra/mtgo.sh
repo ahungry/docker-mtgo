@@ -19,6 +19,7 @@ run() {
 }
 
 if $do_sound; then
+    gst-inspect-1.0 # seems to help avoiding wine crash when loading gstreamer
     run winetricks sound=pulse
 else
     run winetricks sound=disabled
