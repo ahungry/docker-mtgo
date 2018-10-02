@@ -36,6 +36,7 @@ RUN apt-get update \
 RUN apt update && apt install -y --no-install-recommends \
         gstreamer1.0-plugins-good \
         gstreamer1.0-tools \
+        gstreamer1.0-pulseaudio \
         pulseaudio-utils \
     && apt autoremove -y --purge \
     && apt clean -y && rm -rf /var/lib/apt/lists/* \
