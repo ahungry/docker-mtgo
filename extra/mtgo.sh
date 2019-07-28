@@ -18,15 +18,21 @@ run() {
     "${@}"
 }
 
+commontricks="gdiplus=native"
+
 if $do_sound; then
     gst-inspect-1.0 # seems to help avoiding wine crash when loading gstreamer
-    run winetricks sound=pulse
+    run winetricks ${commontricks} sound=pulse winegsreamer=builtin
 else
-    run winetricks sound=disabled
+    run winetricks ${commontricks} sound=disabled winegstreamer=disabled
 fi
 $do_winecfg && (run winecfg ; run wineserver -kw; sleep 1)
 
 run wineboot
+
+# workaround EULA picture
+#find ~/.wine/drive_c/ -name 'EULA_en.rtf' -exec sed '/^{\\pict/,/^}/ d' -i "{}" \;
+
 run wine /opt/mtgo/mtgo.exe
 started=0
 s=1

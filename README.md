@@ -5,9 +5,13 @@ and macOS.
 
 Join the "WineHQ Players" clan! (Account > Buddies, Clan, Chat > Look for WineHQ Players and contact the captain, or send a mail to panard at inzenet dot org with your MTGO user name)
 
-It is based on [i386/debian:stretch-slim](https://hub.docker.com/r/i386/debian/) and wine 3.14.
+It is based on [i386/debian:stretch-slim](https://hub.docker.com/r/i386/debian/) and wine 4.12.1.
 
 See https://appdb.winehq.org/objectManager.php?sClass=version&iId=32007 for more information.
+
+
+[![Donate](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=Y27XTWGY3ZZFY)
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.me/loicpauleve)
 
 ## Installation
 
@@ -21,6 +25,12 @@ Open a terminal and install the `run-mtgo` script:
 wget -O run-mtgo https://raw.githubusercontent.com/pauleve/docker-mtgo/master/run-mtgo
 chmod +x run-mtgo
 ```
+
+Make sure your user is in the `docker` group (command `groups`). If not, add yourself to the docker group:
+```
+sudo usermod -aG docker $USER
+```
+You need to logout/login for the changes to take effect.
 
 ### macOS
 
@@ -48,19 +58,17 @@ Run the docker image using the [run-mtgo](./run-mtgo?raw=true) helper script
 ./run-mtgo
 ```
 
-If for some reason you are prompted for .NET installation, abort, press Ctrl+C to quit the script and run
-```
-./run-mtgo --reset
-```
-(use the `--reset` option only once).
-
 Depending on your configuration, you may want to adjust the resolution of the game, or even switch to desktop emulation which may fix some graphics issues.
 ```
 ./run-mtgo --winecfg
 ```
 It will launch a configuration tool prior to launching MTGO. There you may be interested in the Graphics tab.
 
-
+Sound is disabled by default, but adventurous users can give a try to
+```
+./run-mtgo --sound
+```
+do not hesitate to report issues.
 
 To ensure running the latest docker image, use
 ```
@@ -78,6 +86,14 @@ for other options.
 
 ## Troubleshooting
 
+* `run-mtgo` got permission denied while trying to connect to the Docker daemon socket:
+
+Add yourself to the docker group:
+```
+sudo usermod -aG docker $USER
+```
+You need to logout/login for the changes to take effect.
+
 * `run-mtgo` asks me to install .NET:
 
 First, exit with <kbd>Ctrl</kbd>+<kbd>C</kbd>, then
@@ -90,13 +106,6 @@ First, exit with <kbd>Ctrl</kbd>+<kbd>C</kbd>, then
 docker kill mtgo_running
 ```
 
-* `run-mtgo` got permission denied while trying to connect to the Docker daemon socket:
-
-Add yourself to the docker group:
-```
-sudo usermod -aG docker $USER
-```
-You need to logout/login for the changes to take effect.
 
 ## FAQ
 
